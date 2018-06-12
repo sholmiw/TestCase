@@ -23,7 +23,7 @@ public:
             numOfFailed(0),numOfPassed(0), Total_Cheaks(0),case_name(s){}
 
 // cheak for errors:
-    template <typename T> TestCase& check_equal (T a, T b) {
+    template <typename T> TestCase& check_equal (const T &a,const T &b) {
         Total_Cheaks++;
         if (a == b) {
             numOfPassed++;
@@ -33,7 +33,7 @@ public:
         }
         return *this;
     }
-    template <typename T> TestCase& check_different (T a, T b){
+    template <typename T> TestCase& check_different (const T &a,const T &b){
         Total_Cheaks++;
         if (a!=b){
             numOfPassed++;
@@ -43,7 +43,7 @@ public:
         }
         return *this;
     }
-    template <typename Func,typename T1,typename T2> TestCase& check_function (Func foo ,T1 a, T2 b){
+    template <typename Func,typename T1,typename T2> TestCase& check_function (const Func foo ,const T1& a,const T2& b){
         Total_Cheaks++;
         if ((*foo)(a)==b){
             numOfPassed++;
@@ -54,7 +54,7 @@ public:
         }
         return *this;
     }
-    template <typename T> TestCase& check_output (T a, std::string b){
+    template <typename T> TestCase& check_output (const T& a,const std::string& b){
         std::stringstream sstream;
         sstream << a;
         Total_Cheaks++;
