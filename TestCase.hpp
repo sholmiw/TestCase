@@ -17,10 +17,11 @@
 #define oupfailed1 " string value should be "
 #define oupfailed2 " but is "
 class TestCase {
+    std::ostream& msg;
 public:
     //ctor
     TestCase(std::string s,std::ostream &error):
-            numOfFailed(0),numOfPassed(0), Total_Cheaks(0),case_name(s){}
+            numOfFailed(0),numOfPassed(0), Total_Cheaks(0),case_name(s),msg(error){}
 
 // cheak for errors:
     template <typename T> TestCase& check_equal (const T &a,const T &b) {
@@ -28,7 +29,7 @@ public:
         if (a == b) {
             numOfPassed++;
         } else {
-            std::cout << failedmsg << Total_Cheaks << ": " << a << failedeq << b<< "!\n";
+            msg << failedmsg << Total_Cheaks << ": " << a << failedeq << b<< "!\n";
             numOfFailed++;
         }
         return *this;
@@ -38,7 +39,7 @@ public:
         if (a!=b){
             numOfPassed++;
         }else{
-            std::cout <<failedmsg << Total_Cheaks <<": "<< a << failednoequal << b<<"!\n";
+            msg <<failedmsg << Total_Cheaks <<": "<< a << failednoequal << b<<"!\n";
             numOfFailed++;
         }
         return *this;
@@ -49,7 +50,7 @@ public:
             numOfPassed++;
         }else{
             numOfFailed++;
-            std::cout <<failedmsg << Total_Cheaks <<":"<<failedfunc1 << b << failedfunc2 << (*foo)(a)<<"!\n";
+            msg <<failedmsg << Total_Cheaks <<":"<<failedfunc1 << b << failedfunc2 << (*foo)(a)<<"!\n";
 
         }
         return *this;
@@ -62,14 +63,15 @@ public:
             numOfPassed++;
         }else{
             numOfFailed++;
-            std::cout <<failedmsg << Total_Cheaks <<":"<< oupfailed1<<b<<oupfailed2<< a<<"!\n";
+            msg <<failedmsg << Total_Cheaks <<":"<< oupfailed1<<b<<oupfailed2<< a<<"!\n";
 
         }
         return *this;
     }
-    void print()
+    TestCase& print()
     {
-        std::cout << case_name << ": " << numOfFailed << " failed, " << numOfPassed << " passed, " << Total_Cheaks << " total." << "\n"<<"---\n";
+        msg << case_name << ": " << numOfFailed << " failed, " << numOfPassed << " passed, " << Total_Cheaks << " total." << "\n"<<"---\n";
+        return *this;
     }
 
 
